@@ -3,6 +3,7 @@ spring:
     name: HelloClient
   logging:
     file: /tmp/dev_app.log
+
 server:
   port: 7211
 
@@ -14,7 +15,7 @@ eureka:
     leaseRenewalIntervalInSeconds: 10
     metadataMap:
       instanceId: ${vcap.application.instance_id:${spring.application.name}:${spring.application.instance_id:${server.port}}}
-
+    preferIpAddress:  true
 endpoints:
   restart:
     enabled: true
