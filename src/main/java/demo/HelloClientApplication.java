@@ -1,6 +1,7 @@
 package demo;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -19,21 +20,25 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 @RestController
 @EnableFeignClients
 public class HelloClientApplication {
-	@Autowired
-	HelloClient client;
+    @Autowired
+    HelloClient client;
 
-	@RequestMapping("/")
-	public String hello() {
-		return client.hello();
-	}
+    @Value("${MANAGED_IP}")
+    private String key;
 
-	public static void main(String[] args) {
-		SpringApplication.run(HelloClientApplication.class, args);
-	}
+    @RequestMapping("/")
+    public String hello() {
 
-	@FeignClient("HelloServer")
-	interface HelloClient {
-		@RequestMapping(value = "/", method = GET)
-		String hello();
-	}
+        return key + "!!!" + client.hello();
+    }
+
+    public static void main(String[] args) {
+        SpringApplication.run(HelloClientApplication.class, args);
+    }
+
+    @FeignClient("HelloServer")
+    interface HelloClient {
+        @RequestMapping(value = "/", method = GET)
+        String hello();
+    }
 }
