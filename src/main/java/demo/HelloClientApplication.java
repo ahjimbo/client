@@ -23,13 +23,12 @@ public class HelloClientApplication {
     @Autowired
     HelloClient client;
 
-    @Value("${MANAGED_IP}")
-    private String key;
+/*    @Value("${MANAGED_IP}")
+    private String key;*/
 
     @RequestMapping("/")
     public String hello() {
-
-        return key + "!!!" + client.hello();
+        return client.hello();
     }
 
     public static void main(String[] args) {
